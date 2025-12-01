@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemas Operativos: El Cerebro Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <!-- Marked.js for parsing Markdown responses from Gemini -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Roboto', sans-serif; background-color: #F0F9FF; color: #1E293B; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 400px; } }
+        .glass-panel { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid #BAE6FD; }
+        .timeline-line { position: absolute; left: 50%; transform: translateX(-50%); width: 4px; height: 100%; background-color: #0EA5E9; z-index: 0; }
+        .timeline-point { z-index: 10; }
+        /* Markdown Styles for AI Response */
+        .prose strong { color: #1E3A8A; font-weight: 700; }
+        .prose ul { list-style-type: disc; padding-left: 1.5rem; margin-top: 0.5rem; }
+        .prose p { margin-bottom: 0.75rem; }
+        .typing-indicator span {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: #0EA5E9;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out both;
+            margin: 0 2px;
+        }
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-blue-900 via-blue-600 to-cyan-500 text-white p-10 shadow-lg">
+        <div class="max-w-6xl mx-auto text-center">
+            <h1 class="text-4xl md:text-6xl font-black mb-4 tracking-tight uppercase">Sistemas Operativos</h1>
+            <p class="text-xl md:text-2xl font-light">El director de orquesta de tu ordenador</p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-4 md:p-8 space-y-16">
+
+        <!-- Introduction -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="glass-panel p-8 rounded-2xl shadow-xl">
+                <h2 class="text-3xl font-bold text-blue-800 mb-4">¿Qué es un Sistema Operativo?</h2>
+                <p class="text-lg leading-relaxed text-gray-700 mb-4">
+                    Imagina una orquesta sin director: sería un caos de ruido. El <strong>Sistema Operativo (SO)</strong> actúa como ese intermediario crucial entre tú (el usuario), tus aplicaciones y el hardware físico. Gestiona la memoria, procesa instrucciones y coordina todos los dispositivos conectados.
+                </p>
+                <div class="grid grid-cols-2 gap-4 mt-6">
+                    <div class="bg-blue-100 p-4 rounded-lg text-center">
+                        <span class="text-4xl">🤖</span>
+                        <p class="font-bold text-blue-900 mt-2">Gestión de Hardware</p>
+                    </div>
+                    <div class="bg-cyan-100 p-4 rounded-lg text-center">
+                        <span class="text-4xl">🖥️</span>
+                        <p class="font-bold text-cyan-900 mt-2">Interfaz de Usuario</p>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-panel p-6 rounded-2xl shadow-xl flex flex-col justify-center items-center">
+                <h3 class="text-xl font-bold text-blue-800 mb-4 w-full text-center">Arquitectura en Capas</h3>
+                <div class="w-full max-w-md space-y-2">
+                    <div class="bg-orange-400 text-white p-4 rounded-t-lg text-center font-bold shadow-md transform hover:scale-105 transition">Usuario & Aplicaciones</div>
+                    <div class="bg-cyan-500 text-white p-4 text-center font-bold shadow-md transform hover:scale-105 transition">Shell / Interfaz</div>
+                    <div class="bg-blue-600 text-white p-6 rounded text-center font-bold shadow-md transform hover:scale-105 transition text-xl">KERNEL (Núcleo)</div>
+                    <div class="bg-slate-800 text-white p-4 rounded-b-lg text-center font-bold shadow-md transform hover:scale-105 transition">Hardware Físico</div>
+                </div>
+                <p class="text-sm text-gray-500 mt-4 text-center">El Kernel protege el hardware del acceso directo.</p>
+            </div>
+        </section>
+
+        <!-- History Timeline -->
+        <section>
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-blue-800">Evolución Histórica</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto mt-2">Desde válvulas de vacío hasta la inteligencia artificial, los SO han evolucionado para ser más potentes y fáciles de usar.</p>
+            </div>
+            
+            <div class="relative w-full max-w-4xl mx-auto py-10">
+                <div class="timeline-line hidden md:block"></div>
+                
+                <div class="space-y-8 relative">
+                    <!-- Gen 0-1 -->
+                    <div class="flex flex-col md:flex-row items-center w-full">
+                        <div class="w-full md:w-5/12 p-4 glass-panel rounded-lg shadow-md text-right border-r-4 border-blue-500">
+                            <h4 class="font-bold text-xl text-blue-700">Gen 0 & 1 (1940-50s)</h4>
+                            <p class="text-sm">Sin SO real. Lenguaje máquina, válvulas de vacío y procesamiento secuencial puro. <strong>UNIVAC I</strong> introduce conceptos básicos.</p>
+                        </div>
+                        <div class="w-2/12 flex justify-center timeline-point hidden md:flex">
+                            <div class="w-8 h-8 bg-blue-600 rounded-full border-4 border-white shadow"></div>
+                        </div>
+                        <div class="w-full md:w-5/12"></div>
+                    </div>
+
+                    <!-- Gen 2-3 -->
+                    <div class="flex flex-col md:flex-row items-center w-full">
+                        <div class="w-full md:w-5/12"></div>
+                        <div class="w-2/12 flex justify-center timeline-point hidden md:flex">
+                            <div class="w-8 h-8 bg-cyan-500 rounded-full border-4 border-white shadow"></div>
+                        </div>
+                        <div class="w-full md:w-5/12 p-4 glass-panel rounded-lg shadow-md text-left border-l-4 border-cyan-500">
+                            <h4 class="font-bold text-xl text-cyan-700">Gen 2 & 3 (1960-70s)</h4>
+                            <p class="text-sm">Transistores y Circuitos Integrados. Nace la <strong>Multiprogramación</strong>, Tiempo Compartido y el mítico <strong>UNIX</strong>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Gen 4 -->
+                    <div class="flex flex-col md:flex-row items-center w-full">
+                        <div class="w-full md:w-5/12 p-4 glass-panel rounded-lg shadow-md text-right border-r-4 border-orange-400">
+                            <h4 class="font-bold text-xl text-orange-600">Gen 4 (1971-81)</h4>
+                            <p class="text-sm">El Microprocesador. Nacen los <strong>Ordenadores Personales (PC)</strong>, las redes y sistemas como CP/M. Mayor velocidad.</p>
+                        </div>
+                        <div class="w-2/12 flex justify-center timeline-point hidden md:flex">
+                            <div class="w-8 h-8 bg-orange-400 rounded-full border-4 border-white shadow"></div>
+                        </div>
+                        <div class="w-full md:w-5/12"></div>
+                    </div>
+
+                     <!-- Gen 5 -->
+                     <div class="flex flex-col md:flex-row items-center w-full">
+                        <div class="w-full md:w-5/12"></div>
+                        <div class="w-2/12 flex justify-center timeline-point hidden md:flex">
+                            <div class="w-8 h-8 bg-blue-900 rounded-full border-4 border-white shadow"></div>
+                        </div>
+                        <div class="w-full md:w-5/12 p-4 glass-panel rounded-lg shadow-md text-left border-l-4 border-blue-900">
+                            <h4 class="font-bold text-xl text-blue-900">Gen 5 (1981-Hoy)</h4>
+                            <p class="text-sm">IBM PC, MS-DOS, GUI (Windows/Mac), Linux. Móviles (Android/iOS). IA y Computación en la Nube.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Memory Management -->
+        <section class="bg-white rounded-3xl shadow-2xl p-6 md:p-10 border-t-8 border-cyan-500">
+            <h2 class="text-3xl font-bold text-cyan-800 mb-6 border-b-2 border-gray-100 pb-2">Gestión de Memoria</h2>
+            <p class="text-gray-700 mb-8">
+                La memoria es un recurso finito. El SO debe decidir qué datos mantener cerca del procesador para una velocidad máxima y cuáles enviar al almacenamiento masivo. Es un equilibrio constante entre <strong>Velocidad</strong>, <strong>Capacidad</strong> y <strong>Costo</strong>.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="chart-container" id="memoryPyramidContainer"></div>
+                <div class="flex flex-col justify-center space-y-4">
+                    <div class="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-600">
+                        <h4 class="font-bold text-blue-800">Registros y Caché</h4>
+                        <p class="text-sm text-gray-600">Ultrarrápidos, integrados en la CPU, pero con capacidad mínima. Almacenan lo que se usa "ahora mismo".</p>
+                    </div>
+                    <div class="p-4 bg-cyan-50 rounded-lg border-l-4 border-cyan-500">
+                        <h4 class="font-bold text-cyan-800">Memoria Principal (RAM)</h4>
+                        <p class="text-sm text-gray-600">Área de trabajo activa. Aquí residen los programas en ejecución. Volátil (se borra al apagar).</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg border-l-4 border-gray-400">
+                        <h4 class="font-bold text-gray-800">Memoria Secundaria</h4>
+                        <p class="text-sm text-gray-600">Discos duros (HDD/SSD). Gran capacidad, persistente, pero mucho más lentos que la CPU.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Management -->
+        <section class="bg-gradient-to-br from-slate-50 to-blue-50 rounded-3xl shadow-xl p-6 md:p-10">
+            <h2 class="text-3xl font-bold text-blue-900 mb-6">Gestión de Procesos</h2>
+            <p class="text-gray-700 mb-8">
+                Un proceso es un programa en ejecución. El SO actúa como un malabarista, cambiando rápidamente entre tareas (Multitarea) para crear la ilusión de simultaneidad. Los procesos pasan por diferentes <strong>estados</strong> durante su ciclo de vida.
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Chart: Process States (Distribution Simulation) -->
+                <div>
+                    <h3 class="text-xl font-semibold text-center text-blue-800 mb-4">Ciclo de Vida del Proceso</h3>
+                    <div class="chart-container">
+                        <canvas id="processStatesChart"></canvas>
+                    </div>
+                    <p class="text-xs text-center text-gray-500 mt-2">Distribución típica de tiempo de CPU en diferentes estados</p>
+                </div>
+
+                <!-- Scheduling Concepts -->
+                <div class="space-y-6">
+                    <h3 class="text-xl font-semibold text-center text-blue-800 mb-4">Algoritmos de Planificación</h3>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="bg-white p-4 rounded-xl shadow border border-blue-100 hover:shadow-lg transition">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-bold text-blue-700">FCFS (First Come First Served)</h4>
+                                <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Simple</span>
+                            </div>
+                            <p class="text-sm text-gray-600">"El primero que llega, el primero en servirse". Justo pero ineficiente si un proceso largo bloquea a los cortos.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow border border-cyan-100 hover:shadow-lg transition">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-bold text-cyan-700">SJF (Shortest Job First)</h4>
+                                <span class="bg-cyan-100 text-cyan-800 text-xs px-2 py-1 rounded">Eficiente</span>
+                            </div>
+                            <p class="text-sm text-gray-600">Prioriza el trabajo más corto. Maximiza el rendimiento pero difícil de predecir la duración.</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow border border-orange-100 hover:shadow-lg transition">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-bold text-orange-600">Round Robin</h4>
+                                <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Justo</span>
+                            </div>
+                            <p class="text-sm text-gray-600">Asigna un tiempo fijo (quantum) a cada proceso rotativamente. Ideal para sistemas de tiempo compartido.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- File Systems -->
+        <section class="bg-white rounded-3xl shadow-2xl p-6 md:p-10 border-b-8 border-blue-800">
+            <h2 class="text-3xl font-bold text-blue-800 mb-6">Sistemas de Archivos</h2>
+            <p class="text-gray-700 mb-8">
+                ¿Cómo se organizan los datos en el disco? El sistema de archivos es la estantería de la biblioteca digital. Define cómo se nombran, almacenan y protegen los archivos.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                <div class="chart-container">
+                    <canvas id="fileSystemRadar"></canvas>
+                </div>
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-gray-800">Comparativa Tecnológica</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <span class="text-orange-500 mr-2 font-bold">FAT32:</span>
+                            <span class="text-gray-600 text-sm">El "universal". Compatible con todo (USB, Cámaras), pero inseguro y no soporta archivos >4GB.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-600 mr-2 font-bold">NTFS:</span>
+                            <span class="text-gray-600 text-sm">Estándar de Windows. Soporta seguridad, cifrado, cuotas y archivos enormes. Robusto ante fallos.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-cyan-600 mr-2 font-bold">EXT4:</span>
+                            <span class="text-gray-600 text-sm">El corazón de Linux. Eficiente, rápido y reduce la fragmentación. Ideal para servidores.</span>
+                        </li>
+                    </ul>
+                    <div class="mt-6 p-4 bg-slate-100 rounded-lg">
+                        <h4 class="font-bold text-slate-700 mb-2">Concepto Clave: Permisos</h4>
+                        <div class="flex justify-around text-center">
+                            <div>
+                                <div class="text-2xl font-black text-green-600">R</div>
+                                <div class="text-xs">Lectura</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-black text-yellow-600">W</div>
+                                <div class="text-xs">Escritura</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-black text-red-600">X</div>
+                                <div class="text-xs">Ejecución</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Assistant Section -->
+        <section class="bg-gradient-to-r from-blue-900 to-slate-900 text-white rounded-3xl shadow-2xl p-6 md:p-10">
+            <div class="flex items-center mb-6">
+                <span class="text-4xl mr-4">✨</span>
+                <div>
+                    <h2 class="text-3xl font-bold text-cyan-400">Inteligencia Artificial del Sistema</h2>
+                    <p class="text-blue-200">Utiliza el poder de Gemini para profundizar en tus conocimientos.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- Card 1: Expert Q&A -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-blue-700 shadow-lg">
+                    <h3 class="text-xl font-bold text-white mb-3 flex items-center">
+                        <span class="bg-blue-600 p-2 rounded-lg mr-3">🧠</span> El Oráculo del SO
+                    </h3>
+                    <p class="text-sm text-slate-400 mb-4">Pregunta cualquier duda técnica sobre gestión de memoria, procesos o historia.</p>
+                    
+                    <div class="space-y-4">
+                        <textarea id="expertQuestion" class="w-full bg-slate-900 border border-slate-600 rounded-lg p-3 text-white focus:outline-none focus:border-cyan-500 transition h-24 resize-none" placeholder="Ej: ¿Cuál es la diferencia entre Paginación y Segmentación?"></textarea>
+                        <button onclick="askGeminiExpert()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition flex items-center justify-center gap-2">
+                            <span>Analizar Consulta</span> ✨
+                        </button>
+                    </div>
+                    
+                    <!-- Output Area -->
+                    <div id="expertOutput" class="mt-4 p-4 bg-slate-900 rounded-lg border border-slate-700 min-h-[100px] text-sm text-slate-300 hidden"></div>
+                </div>
+
+                <!-- Card 2: Analogy Generator -->
+                <div class="bg-slate-800 rounded-xl p-6 border border-orange-700 shadow-lg">
+                    <h3 class="text-xl font-bold text-white mb-3 flex items-center">
+                        <span class="bg-orange-600 p-2 rounded-lg mr-3">💡</span> Generador de Analogías
+                    </h3>
+                    <p class="text-sm text-slate-400 mb-4">¿Conceptos difíciles? Pide una analogía del mundo real para entenderlo mejor.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="relative">
+                            <input type="text" id="analogyTerm" class="w-full bg-slate-900 border border-slate-600 rounded-lg p-3 text-white focus:outline-none focus:border-orange-500 transition" placeholder="Ej: Memoria Virtual, Kernel, Driver...">
+                        </div>
+                        <button onclick="generateAnalogy()" class="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-lg transition flex items-center justify-center gap-2">
+                            <span>Crear Analogía</span> ✨
+                        </button>
+                    </div>
+
+                    <!-- Output Area -->
+                    <div id="analogyOutput" class="mt-4 p-4 bg-slate-900 rounded-lg border border-slate-700 min-h-[100px] text-sm text-slate-300 hidden"></div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-white text-center p-8 mt-12">
+        <p class="text-slate-400">Infografía basada en la Unidad de Trabajo: Sistemas Operativos.</p>
+        <p class="text-xs text-slate-600 mt-2">Generada con Chart.js, Plotly.js y Gemini API | Diseño Tailwind CSS</p>
+    </footer>
+
+    <script>
+        // --- API Configuration ---
+        const apiKey = "AIzaSyDY0JMRRbrendD-A__Hyo6xUVWMZe1ABSw"; // API Key injected by environment
+
+        // --- Helper: Call Gemini API ---
+        async function callGeminiAPI(prompt, outputElementId) {
+            const outputDiv = document.getElementById(outputElementId);
+            
+            // UI Loading State
+            outputDiv.classList.remove('hidden');
+            outputDiv.innerHTML = '<div class="flex items-center text-cyan-400"><div class="typing-indicator"><span></span><span></span><span></span></div><span class="ml-2">Procesando datos...</span></div>';
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{ text: prompt }]
+                        }]
+                    })
+                });
+
+                if (!response.ok) throw new Error('Error en la conexión con el núcleo AI');
+
+                const data = await response.json();
+                const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "No se recibió respuesta.";
+
+                // Render Markdown
+                outputDiv.innerHTML = `<div class="prose prose-invert max-w-none">${marked.parse(text)}</div>`;
+
+            } catch (error) {
+                console.error(error);
+                outputDiv.innerHTML = `<div class="text-red-400 font-bold">Error del Sistema: ${error.message}. Inténtalo de nuevo.</div>`;
+            }
+        }
+
+        // --- Feature 1: Expert Q&A ---
+        function askGeminiExpert() {
+            const question = document.getElementById('expertQuestion').value.trim();
+            if (!question) return;
+            
+            const prompt = `Actúa como un experto profesor de Sistemas Operativos. Responde a la siguiente pregunta de un estudiante de manera clara, concisa y precisa, utilizando terminología técnica adecuada pero explicada sencillamente. Pregunta: "${question}"`;
+            
+            callGeminiAPI(prompt, 'expertOutput');
+        }
+
+        // --- Feature 2: Analogy Generator ---
+        function generateAnalogy() {
+            const term = document.getElementById('analogyTerm').value.trim();
+            if (!term) return;
+
+            const prompt = `Actúa como un experto en comunicación técnica. Explica el concepto de Sistemas Operativos: "${term}" utilizando una analogía creativa y fácil de entender del mundo real (por ejemplo, comparándolo con una cocina, una oficina, tráfico, etc.). Sé breve y divertido.`;
+
+            callGeminiAPI(prompt, 'analogyOutput');
+        }
+
+        // --- Color Palette Configuration ---
+        const colors = {
+            primary: '#1E3A8A',   // Deep Blue
+            secondary: '#06B6D4', // Cyan
+            accent: '#F97316',    // Orange
+            light: '#E0F2FE',     // Light Blue
+            slate: '#64748B',     // Slate
+            white: '#FFFFFF'
+        };
+
+        // --- Label Wrapping Helper (16 char limit) ---
+        function wrapLabel(str, maxChars) {
+            if (str.length <= maxChars) return str;
+            const words = str.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+
+            for (let i = 1; i < words.length; i++) {
+                if ((currentLine + " " + words[i]).length <= maxChars) {
+                    currentLine += " " + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        // --- Tooltip Callback Helper ---
+        const commonTooltipOptions = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            }
+        };
+
+        // --- CHART 1: Process States (Chart.js Doughnut) ---
+        // Visualizing the proportion of time a process might spend in different states
+        const ctxProcess = document.getElementById('processStatesChart').getContext('2d');
+        new Chart(ctxProcess, {
+            type: 'doughnut',
+            data: {
+                labels: ['En Ejecución (CPU)', 'Listo (Esperando CPU)', 'Bloqueado (E/S)'],
+                datasets: [{
+                    data: [15, 35, 50], // Typical I/O bound process
+                    backgroundColor: [colors.accent, colors.secondary, colors.primary],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: commonTooltipOptions,
+                    title: {
+                        display: true,
+                        text: 'Tiempo Típico de Proceso (I/O Bound)'
+                    }
+                }
+            }
+        });
+
+        // --- CHART 2: Memory Hierarchy (Plotly Funnel) ---
+        // Using Plotly for the Pyramid shape as strictly requested for hierarchy
+        const memoryContainer = document.getElementById('memoryPyramidContainer');
+        const memoryData = [{
+            type: 'funnel',
+            y: ['Registros CPU', 'Memoria Caché', 'Memoria RAM', 'Disco Duro / SSD'],
+            x: [10, 30, 60, 100], // Conceptual width representing capacity
+            textinfo: "label+text",
+            text: ["Ultra Rápido", "Muy Rápido", "Rápido", "Lento"],
+            marker: {
+                color: [colors.accent, colors.secondary, colors.primary, colors.slate],
+                line: { width: 0 }
+            },
+            connector: { line: { color: "white", width: 3 } }
+        }];
+
+        const memoryLayout = {
+            margin: { l: 150, r: 10, t: 20, b: 20 },
+            funnelmode: "stack",
+            showlegend: false,
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { family: 'Roboto' }
+        };
+
+        // Use Plotly newPlot but ensure we respect the container size
+        Plotly.newPlot(memoryContainer, memoryData, memoryLayout, {displayModeBar: false, responsive: true});
+
+
+        // --- CHART 3: File Systems Radar (Chart.js Radar) ---
+        // Comparing attributes of file systems
+        const ctxRadar = document.getElementById('fileSystemRadar').getContext('2d');
+        
+        // Prepare labels with wrapping
+        const radarLabels = [
+            'Tamaño Máx Archivo', 
+            'Seguridad/Permisos', 
+            'Compatibilidad OS', 
+            'Recuperación Fallos', 
+            'Eficiencia Espacio'
+        ].map(l => wrapLabel(l, 16));
+
+        new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: radarLabels,
+                datasets: [{
+                    label: 'FAT32',
+                    data: [2, 1, 5, 1, 2], // High compatibility, low specs
+                    fill: true,
+                    backgroundColor: 'rgba(249, 115, 22, 0.2)', // Orange
+                    borderColor: colors.accent,
+                    pointBackgroundColor: colors.accent,
+                }, {
+                    label: 'NTFS',
+                    data: [5, 5, 3, 4, 4], // High specs, Windows centric
+                    fill: true,
+                    backgroundColor: 'rgba(30, 58, 138, 0.2)', // Blue
+                    borderColor: colors.primary,
+                    pointBackgroundColor: colors.primary,
+                }, {
+                    label: 'EXT4',
+                    data: [5, 4, 2, 5, 5], // High specs, Linux centric
+                    fill: true,
+                    backgroundColor: 'rgba(6, 182, 212, 0.2)', // Cyan
+                    borderColor: colors.secondary,
+                    pointBackgroundColor: colors.secondary,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: '#E2E8F0' },
+                        grid: { color: '#E2E8F0' },
+                        pointLabels: {
+                            font: { size: 11, family: 'Roboto' },
+                            color: colors.slate
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 5,
+                        ticks: { display: false } // Hide numbers for cleaner look
+                    }
+                },
+                plugins: {
+                    tooltip: commonTooltipOptions,
+                    legend: { position: 'top' }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
